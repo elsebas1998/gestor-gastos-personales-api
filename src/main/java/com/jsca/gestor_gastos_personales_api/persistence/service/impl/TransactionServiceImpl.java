@@ -9,7 +9,7 @@ import com.jsca.gestor_gastos_personales_api.persistence.entities.TransactionEnt
 import com.jsca.gestor_gastos_personales_api.persistence.entities.UserEntity;
 import com.jsca.gestor_gastos_personales_api.persistence.repository.TransactionRepository;
 import com.jsca.gestor_gastos_personales_api.persistence.service.CategoryService;
-import com.jsca.gestor_gastos_personales_api.persistence.service.TransaccionService;
+import com.jsca.gestor_gastos_personales_api.persistence.service.TransactionService;
 import com.jsca.gestor_gastos_personales_api.persistence.service.UserService;
 import com.jsca.gestor_gastos_personales_api.util.emun.TransactionType;
 import com.jsca.gestor_gastos_personales_api.util.mapper.TransactionMapper;
@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
-public class TransactionServiceImpl implements TransaccionService {
+public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
@@ -103,11 +103,10 @@ public class TransactionServiceImpl implements TransaccionService {
     }
 
     /**
-     * Obtener resumen mensual (para Dashboard)
+     * Obtener resumen mensual
      */
     @Override
     public MonthlySummaryResponse getMonthlySummary(final Long userId, int year, int month) {
-        // Calcular totales por tipo
         LocalDate startDate = LocalDate.of(year, month, 1);
         LocalDate endDate = YearMonth.of(year, month).atEndOfMonth();
 

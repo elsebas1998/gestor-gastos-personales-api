@@ -9,6 +9,7 @@ import com.jsca.gestor_gastos_personales_api.util.mapper.UserMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
      * Registrar nuevo usuario
      */
     @Override
-    @Transactional // Escritura requiere transacción
+    @Transactional
     public UserResponse registerUser(final RegisterRequest request) throws Exception {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new Exception("El username  ya esta en uso");
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Buscar entidad de usuario (para uso interno en otros servicios)
+     * Buscar entidad de usuario
      */
     @Override
     public UserEntity findUserEntityById(final Long userId) throws Exception {
@@ -71,11 +72,20 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Buscar entidad por username (para autenticación)
+     * Buscar entidad por username
      */
     @Override
     public UserEntity findUserEntityByUsername(final String username) throws Exception {
         return userRepository.findByUsername(username)
+                .orElseThrow(() -> new Exception("Usuario no encontrado"));
+    }
+
+    /**
+     * Buscar usuario por identificacion
+     */
+    @Override
+    public UserEntity findUserEntityByIdentification(final String identification) throws Exception {
+        return userRepository.findByIdentification(identification)
                 .orElseThrow(() -> new Exception("Usuario no encontrado"));
     }
 }

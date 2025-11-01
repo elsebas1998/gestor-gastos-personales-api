@@ -10,4 +10,5 @@ public interface UserService {
     UserResponse getUserByUsername(String username) throws Exception;
     UserEntity findUserEntityById(Long userId) throws Exception;
     UserEntity findUserEntityByUsername(String username) throws Exception;
+    UserEntity findUserEntityByIdentification(String identification) throws Exception;
 }

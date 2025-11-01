@@ -50,22 +50,22 @@ public class CategoryEntity extends BaseEntity {
     @Builder.Default
     private Boolean isFixed = false;
 
-    @Size(max = 50, message = "Icon must not exceed 50 characters")
+    @Size(max = 50)
     @Column(name = "icon", length = 50)
     private String icon;
 
-    @Size(max = 20, message = "Color must not exceed 20 characters")
+    @Size(max = 20)
     @Column(name = "color", length = 20)
     private String color;
 
-    @Column(name = "description", columnDefinition = "TEXT")
+    @Column(name = "description")
     private String description;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_category_user"))
-    @NotNull(message = "User is required")
+    @NotNull
     private UserEntity user;
 
 
