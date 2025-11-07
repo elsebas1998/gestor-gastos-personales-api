@@ -1,10 +1,12 @@
 package com.jsca.gestor_gastos_personales_api.domain.impl;
 
 import com.jsca.gestor_gastos_personales_api.domain.ReportService;
+import com.jsca.gestor_gastos_personales_api.persistence.dto.request.TransactionReport;
 import com.jsca.gestor_gastos_personales_api.persistence.dto.response.MonthlySummaryResponse;
 import com.jsca.gestor_gastos_personales_api.persistence.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -120,6 +123,63 @@ public class ReportServiceImpl implements ReportService {
             return "0.0%";
         }
         return String.format("%.1f%%", tasaDecimal);
+    }
+
+    /**
+     * Generar PDF de Transacciones Detalladas
+     */
+    public byte[] generateTransaccionesDetalladasPDF(Long userId, Integer anio, Integer mes) throws Exception {
+
+        if (transactionService == null) {
+            throw new RuntimeException("TransactionService no está disponible");
+        }
+
+        MonthlySummaryResponse summary = transactionService.getMonthlySummary(userId, anio, mes);
+
+        List<TransactionReport> transactions = transactionService.getTransactionsByMonthAndYear(userId, anio, mes);
+
+        String nombreMes = obtenerNombreMes(mes);
+        String usuario = "Usuario";
+
+        return generarPDFTransacciones(nombreMes, anio, usuario, summary, transactions);
+    }
+
+    private byte[] generarPDFTransacciones(
+            String nombreMes,
+            Integer anio,
+            String usuario,
+            MonthlySummaryResponse summary,
+            List<TransactionReport> transactions
+    ) throws Exception {
+
+        InputStream jasperStream = new ClassPathResource("reports/compiled/transacciones-detalladas.jasper")
+                .getInputStream();
+
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+
+        Map<String, Object> parameters = new HashMap<>();
+
+        ClassPathResource logoResource = new ClassPathResource("reports/images/logo.png");
+        ClassPathResource watermarkResource = new ClassPathResource("reports/images/watermark.png");
+
+        parameters.put("LOGO_PATH", logoResource.getFile().getAbsolutePath());
+        parameters.put("WATERMARK_PATH", watermarkResource.getFile().getAbsolutePath());
+        parameters.put("MES", nombreMes);
+        parameters.put("ANIO", anio);
+        parameters.put("USUARIO", usuario);
+        parameters.put("TOTAL_TRANSACCIONES", transactions.size());
+        parameters.put("TOTAL_INGRESOS", formatearMoneda(summary.getTotalIncome()));
+        parameters.put("TOTAL_EGRESOS", formatearMoneda(summary.getTotalExpense()));
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(transactions);
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(
+                jasperReport,
+                parameters,
+                dataSource
+        );
+
+        return JasperExportManager.exportReportToPdf(jasperPrint);
     }
 }
 

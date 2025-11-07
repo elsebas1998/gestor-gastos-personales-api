@@ -1,6 +1,7 @@
 package com.jsca.gestor_gastos_personales_api.persistence.service;
 
 import com.jsca.gestor_gastos_personales_api.persistence.dto.request.CreateTransactionRequest;
+import com.jsca.gestor_gastos_personales_api.persistence.dto.request.TransactionReport;
 import com.jsca.gestor_gastos_personales_api.persistence.dto.request.UpdateTransactionRequest;
 import com.jsca.gestor_gastos_personales_api.persistence.dto.response.MonthlySummaryResponse;
 import com.jsca.gestor_gastos_personales_api.persistence.dto.response.TransactionResponse;
@@ -30,4 +31,8 @@ public interface TransactionService {
     void deleteTransaction(Long userId, Long transactionId) throws Exception;
 
     public List<TransactionResponse> getTransactionsByDateRange(Long userId, LocalDate startDate, LocalDate endDate);
+
+
+    List<TransactionReport> getTransactionsByMonthAndYear(Long userId, Integer year, Integer month);
+
 }

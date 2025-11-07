@@ -7,4 +7,5 @@ public interface ReportService {
 
     public byte[] generateResumenMensualPDF(Long userId, Integer anio, Integer mes) throws Exception;
 
+    public byte[] generateTransaccionesDetalladasPDF(Long userId, Integer anio, Integer mes) throws Exception;
 }

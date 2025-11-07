@@ -1,6 +1,7 @@
 package com.jsca.gestor_gastos_personales_api.persistence.service.impl;
 
 import com.jsca.gestor_gastos_personales_api.persistence.dto.request.CreateTransactionRequest;
+import com.jsca.gestor_gastos_personales_api.persistence.dto.request.TransactionReport;
 import com.jsca.gestor_gastos_personales_api.persistence.dto.request.UpdateTransactionRequest;
 import com.jsca.gestor_gastos_personales_api.persistence.dto.response.MonthlySummaryResponse;
 import com.jsca.gestor_gastos_personales_api.persistence.dto.response.TransactionResponse;
@@ -13,6 +14,7 @@ import com.jsca.gestor_gastos_personales_api.persistence.service.TransactionServ
 import com.jsca.gestor_gastos_personales_api.persistence.service.UserService;
 import com.jsca.gestor_gastos_personales_api.util.emun.TransactionType;
 import com.jsca.gestor_gastos_personales_api.util.mapper.TransactionMapper;
+import jakarta.transaction.Transaction;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -199,4 +201,26 @@ public class TransactionServiceImpl implements TransactionService {
         }
         transactionRepository.delete(transaction);
     }
+
+    @Override
+    public List<TransactionReport> getTransactionsByMonthAndYear(Long userId, Integer year, Integer month) {
+
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+
+        List<TransactionEntity> transactions = transactionRepository.findByUserUserIdAndTransactionDateBetween(userId, startDate, endDate);
+
+        return transactions.stream()
+                .map(t -> new TransactionReport(
+                        t.getTransactionId(),
+                        t.getDescription(),
+                        t.getCategory() != null ? t.getCategory().getName() : "Sin categoría",
+                        t.getAmount(),
+                        t.getType().name(),
+                        t.getTransactionDate()
+                ))
+                .sorted((a, b) -> b.getTransactionDate().compareTo(a.getTransactionDate())) // Ordenar descendente
+                .collect(Collectors.toList());
+    }
+
 }

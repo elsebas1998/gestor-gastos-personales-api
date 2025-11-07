@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="transacciones-detalladas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="12345678-1234-1234-1234-123456789abc">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<parameter name="LOGO_PATH" class="java.lang.String"/>
+	<parameter name="WATERMARK_PATH" class="java.lang.String"/>
+	<parameter name="MES" class="java.lang.String"/>
+	<parameter name="ANIO" class="java.lang.Integer"/>
+	<parameter name="USUARIO" class="java.lang.String"/>
+	<parameter name="TOTAL_TRANSACCIONES" class="java.lang.Integer"/>
+	<parameter name="TOTAL_INGRESOS" class="java.lang.String"/>
+	<parameter name="TOTAL_EGRESOS" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="transactionId" class="java.lang.Long"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="categoryName" class="java.lang.String"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="type" class="java.lang.String"/>
+	<field name="transactionDate" class="java.time.LocalDate"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="150" splitType="Stretch">
+			<image hAlign="Left" vAlign="Top">
+				<reportElement x="20" y="10" width="100" height="40" uuid="12345678-1234-1234-1234-123456789001"/>
+				<imageExpression><![CDATA[$P{LOGO_PATH}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="130" y="10" width="400" height="30" uuid="12345678-1234-1234-1234-123456789002"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE TRANSACCIONES DETALLADAS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="45" width="400" height="20" uuid="12345678-1234-1234-1234-123456789003"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Mes: " + $P{MES} + " " + $P{ANIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="70" width="400" height="20" uuid="12345678-1234-1234-1234-123456789004"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Usuario: " + $P{USUARIO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="20" y="100" width="555" height="1" uuid="12345678-1234-1234-1234-123456789005"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#333333"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="10" width="150" height="20" uuid="12345678-1234-1234-1234-123456789006"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Transacciones:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="10" width="100" height="20" uuid="12345678-1234-1234-1234-123456789007"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TOTAL_TRANSACCIONES}.toString()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="10" width="100" height="20" uuid="12345678-1234-1234-1234-123456789008"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Ingresos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="410" y="10" width="145" height="20" uuid="12345678-1234-1234-1234-123456789009"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TOTAL_INGRESOS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="35" width="150" height="20" uuid="12345678-1234-1234-1234-123456789010"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Egresos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="35" width="100" height="20" uuid="12345678-1234-1234-1234-123456789011"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TOTAL_EGRESOS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="40" splitType="Stretch">
+			<rectangle>
+				<reportElement x="20" y="0" width="555" height="40" backcolor="#667EEA" uuid="12345678-1234-1234-1234-123456789012"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="20" y="10" width="80" height="20" forecolor="#FFFFFF" uuid="12345678-1234-1234-1234-123456789013"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="10" width="150" height="20" forecolor="#FFFFFF" uuid="12345678-1234-1234-1234-123456789014"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="10" width="100" height="20" forecolor="#FFFFFF" uuid="12345678-1234-1234-1234-123456789015"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Categoría]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="10" width="70" height="20" forecolor="#FFFFFF" uuid="12345678-1234-1234-1234-123456789016"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="10" width="135" height="20" forecolor="#FFFFFF" uuid="12345678-1234-1234-1234-123456789017"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="20" y="5" width="80" height="15" uuid="12345678-1234-1234-1234-123456789018"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transactionDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="5" width="150" height="15" uuid="12345678-1234-1234-1234-123456789019"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="5" width="100" height="15" uuid="12345678-1234-1234-1234-123456789020"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{categoryName} != null ? $F{categoryName} : "Sin categoría"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="5" width="70" height="15" uuid="12345678-1234-1234-1234-123456789021"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="5" width="135" height="15" uuid="12345678-1234-1234-1234-123456789022"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("$%,.2f", $F{amount})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="20" y="23" width="555" height="1" forecolor="#EEEEEE" uuid="12345678-1234-1234-1234-123456789023"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="40" splitType="Stretch">
+			<line>
+				<reportElement x="20" y="5" width="555" height="1" forecolor="#CCCCCC" uuid="12345678-1234-1234-1234-123456789024"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="20" y="15" width="200" height="20" uuid="12345678-1234-1234-1234-123456789025"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER} + " de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="220" y="15" width="150" height="20" uuid="12345678-1234-1234-1234-123456789026"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Gestor de Gastos v1.0]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="370" y="15" width="205" height="20" uuid="12345678-1234-1234-1234-123456789027"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

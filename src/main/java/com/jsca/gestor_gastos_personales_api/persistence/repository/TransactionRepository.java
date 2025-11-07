@@ -2,6 +2,7 @@ package com.jsca.gestor_gastos_personales_api.persistence.repository;
 
 import com.jsca.gestor_gastos_personales_api.persistence.entities.TransactionEntity;
 import com.jsca.gestor_gastos_personales_api.util.emun.TransactionType;
+import jakarta.transaction.Transaction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -100,4 +101,14 @@ public interface TransactionRepository extends JpaRepository<TransactionEntity, 
      * Ultimas N transacciones de un usuario
      */
     Page<TransactionEntity> findByUser_UserIdOrderByTransactionDateDesc(Long userId, Pageable pageable);
+
+    /**
+     * Obtener transacciones por usuario, año y mes
+     */
+    List<TransactionEntity> findByUserUserIdAndTransactionDateBetween(
+            Long userId,
+            LocalDate startDate,
+            LocalDate endDate
+    );
+
 }
