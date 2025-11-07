@@ -19,10 +19,13 @@ public class CoreServicesImpl implements CoreServices {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Valida el acceso de un usario
+     */
     @Override
     public ResponseEntity<UserResponse> login(LoginRequest request) throws Exception {
        UserEntity user = userService.findUserEntityByUsername(request.getUsername());
-       if(passwordEncoder.matches(request.getPassword(), user.getPasswordHash())){
+       if(!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())){
            throw new Exception("Contraseña incorrecta");
        }
        UserResponse userResponse = userService.getUserByUsername(request.getUsername());

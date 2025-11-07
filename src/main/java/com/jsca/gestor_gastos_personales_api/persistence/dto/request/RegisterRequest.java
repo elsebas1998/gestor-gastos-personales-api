@@ -17,6 +17,10 @@ public class RegisterRequest {
     private String username;
 
     @NotBlank
+    @Size(min = 10, max = 10)
+    private String identification;
+
+    @NotBlank
     @Email
     @Size(max = 100)
     private String email;

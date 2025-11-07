@@ -22,10 +22,10 @@ public class UserMapper {
 
         return UserEntity.builder()
                 .username(request.getUsername())
+                .identification(request.getIdentification())
                 .email(request.getEmail())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                // passwordHash se asigna en el servicio después de hashear
                 .isActive(true)
                 .build();
     }
